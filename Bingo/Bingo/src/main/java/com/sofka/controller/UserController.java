@@ -76,7 +76,7 @@ public class UserController {
     @CrossOrigin()
     public ResponseEntity update(User user, @PathVariable("id") Long id){
         userService.update(id,user);
-        log.info("Contacto a modificar {}",user);
+        log.info("Usuario a modificar {}",user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
