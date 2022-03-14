@@ -1,7 +1,7 @@
 package com.sofka.controller;
 
-import com.sofka.domain.Number;
-import com.sofka.service.NumberService;
+import com.sofka.domain.GameUser;
+import com.sofka.service.GameUserService;
 import com.sofka.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @RestController
-public class NumberController {
+public class GameUserController {
 
     @Autowired
-    private NumberService numberService;
+    private GameUserService gameUserService;
     private Response response = new Response();
 
     /**
-     * Metodo para mostrar la lista de contactos
-     * @return
+     * Metodo para mostrar la lista
+     * @return gameUser
      */
-    @GetMapping(path ="/numbers")
+    @GetMapping(path ="/gameusers")
     @CrossOrigin()
     public Response list(){
         try {
-            response.data= numberService.list();
+            response.data= gameUserService.list();
         } catch (Exception exc) {
             response.error = true;
             response.message = exc.getMessage();
@@ -42,41 +42,41 @@ public class NumberController {
     }
 
     /**
-     * Metodo para crear tabla numero del bingo correspondientes a cada usuario
-     * @param number
+     * Metodo para crear
+     * @param gameUser
      * @return
      */
-    @PostMapping(path ="/number/create")
+    @PostMapping(path ="/gameuser/create")
     @CrossOrigin()
-    public ResponseEntity<Response> create(Number number) {
-        log.info("Tabla del bingo a crear: {}", number);
-        numberService.save(number);
+    public ResponseEntity<Response> create(GameUser gameUser) {
+        log.info("Lista a crear: {}", gameUser);
+        gameUserService.save(gameUser);
         return new ResponseEntity<Response>(response, HttpStatus.CREATED);
     }
 
     /**
-     * Metodo para borrar un tabla de numeros
-     * @param number
+     * Metodo para borrar un contacto
+     * @param gameUser
      * @return
      */
-    @DeleteMapping(path ="/number/delete/{id}")
+    @DeleteMapping(path ="/gameuser/delete/{id}")
     @CrossOrigin()
-    public ResponseEntity<Number> delete(Number number){
-        log.info("El numero de la tabla a borrar {}",number);
-        numberService.delete(number);
-        return new ResponseEntity<>(number, HttpStatus.OK);
+    public ResponseEntity<GameUser> delete(GameUser gameUser){
+        log.info("Lista a borrar {}",gameUser);
+        gameUserService.delete(gameUser);
+        return new ResponseEntity<>(gameUser, HttpStatus.OK);
     }
     /**
-     * Metodo para actualizar una tabla
-     * @param number
+     * Metodo para actualizar
+     * @param gameUser
      * @param id
      * @return
      */
-    @PutMapping(path ="/number/update/{id}")
+    @PutMapping(path ="/gameuser/update/{id}")
     @CrossOrigin()
-    public ResponseEntity update(Number number, @PathVariable("id") Long id){
-        numberService.update(id,number);
-        log.info("El numero de la tabla a modificar {}",number);
-        return new ResponseEntity<>(number, HttpStatus.OK);
+    public ResponseEntity update(GameUser gameUser, @PathVariable("id") Long id){
+        gameUserService.update(id,gameUser);
+        log.info("Lista modificar {}",gameUser);
+        return new ResponseEntity<>(gameUser, HttpStatus.OK);
     }
 }

@@ -6,27 +6,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.GenerationType;
-import javax.persistence.Temporal;
 import javax.persistence.Table;
-import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "user_has_game")
+public class GameUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
-     * Modelo que representa la tabla de contactos
+     * Modelo que representa la tabla de usuario con el juego
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id_user")
+    @Column(name ="id_user_has_game")
     private Long id;
-    private String name;
-    @Column(name = "create_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date create_at = new Date();
+    @Column(name ="user_id_user")
+    private String idUser;
+    @Column(name ="game_id_game")
+    private String idGame;
 }
