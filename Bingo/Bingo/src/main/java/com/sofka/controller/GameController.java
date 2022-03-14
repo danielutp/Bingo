@@ -1,7 +1,7 @@
 package com.sofka.controller;
 
-import com.sofka.domain.TableUser;
-import com.sofka.service.TableUserService;
+import com.sofka.domain.Game;
+import com.sofka.service.GameService;
 import com.sofka.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @RestController
-public class TableUserController {
+public class GameController {
 
     @Autowired
-    private TableUserService tableUserService;
+    private GameService gameService;
     private Response response = new Response();
 
     /**
-     * Metodo para mostrar
-     * @return
+     * Metodo para mostrar la lista
+     * @return game
      */
-    @GetMapping(path ="/tableUsers")
+    @GetMapping(path ="/games")
     @CrossOrigin()
     public Response list(){
         try {
-            response.data= tableUserService.list();
+            response.data= gameService.list();
         } catch (Exception exc) {
             response.error = true;
             response.message = exc.getMessage();
@@ -43,40 +43,40 @@ public class TableUserController {
 
     /**
      * Metodo para crear
-     * @param tableUser
+     * @param game
      * @return
      */
-    @PostMapping(path ="/tableUser/create")
+    @PostMapping(path ="/game/create")
     @CrossOrigin()
-    public ResponseEntity<Response> create(TableUser tableUser) {
-        log.info("Tabla creada: {}", tableUser);
-        tableUserService.save(tableUser);
+    public ResponseEntity<Response> create(Game game) {
+        log.info("Juego a crear: {}", game);
+        gameService.save(game);
         return new ResponseEntity<Response>(response, HttpStatus.CREATED);
     }
 
     /**
-     * Metodo para borrar
-     * @param tableUser
+     * Metodo para borrar un contacto
+     * @param game
      * @return
      */
-    @DeleteMapping(path ="/tableUser/delete/{id}")
+    @DeleteMapping(path ="/game/delete/{id}")
     @CrossOrigin()
-    public ResponseEntity<TableUser> delete( TableUser tableUser){
-        log.info("tabla borrada {}",tableUser);
-        tableUserService.delete(tableUser);
-        return new ResponseEntity<>(tableUser, HttpStatus.OK);
+    public ResponseEntity<Game> delete(Game game){
+        log.info("Juego a borrar {}",game);
+        gameService.delete(game);
+        return new ResponseEntity<>(game, HttpStatus.OK);
     }
     /**
      * Metodo para actualizar
-     * @param tableUser
+     * @param game
      * @param id
      * @return
      */
-    @PutMapping(path ="/tableUser/update/{id}")
+    @PutMapping(path ="/game/update/{id}")
     @CrossOrigin()
-    public ResponseEntity update(TableUser tableUser, @PathVariable("id") Long id){
-        tableUserService.update(id,tableUser);
-        log.info("Modificado {}",tableUser);
-        return new ResponseEntity<>(tableUser, HttpStatus.OK);
+    public ResponseEntity update(Game game, @PathVariable("id") Long id){
+        gameService.update(id,game);
+        log.info("Juego a modificar {}",game);
+        return new ResponseEntity<>(game, HttpStatus.OK);
     }
 }
